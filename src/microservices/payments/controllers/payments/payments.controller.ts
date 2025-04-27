@@ -17,6 +17,7 @@ import {
 import { PaymentsService } from '../../services/payments/payments.service';
 import { CreatePaymentDto } from '../../dtos/create-payment.dto';
 import { WebhookDto } from '../../dtos/webhook.dto';
+import { get } from 'http';
   
   @Controller()
   export class PaymentsController {
@@ -30,6 +31,12 @@ import { WebhookDto } from '../../dtos/webhook.dto';
       return res.json(paymentData);
     }
   
+    @Get('payment-status/:collect_request_id')
+    @UseGuards(AuthGuard('jwt'))
+    async getPaymentStatus(@Param('collect_request_id') collect_request_id: string, @Query('school_id') school_id: string) {
+      const paymentStatus = await this.paymentsService.getPaymentStatus(collect_request_id,school_id);
+      return paymentStatus;
+    }
     // Webhook endpoint to receive payment status updates
     @Post('webhook')
     @HttpCode(200)
@@ -62,7 +69,7 @@ import { WebhookDto } from '../../dtos/webhook.dto';
     ) {
       return this.paymentsService.getSchoolTransactions(schoolId, page, limit, sort, order);
     }
-  
+    
     // Check transaction status by custom order ID
     @Get('transaction-status/:customOrderId')
     @UseGuards(AuthGuard('jwt'))

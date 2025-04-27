@@ -88,7 +88,6 @@ export class PaymentsService {
           { collect_id: order._id },
         );
       }
-
       return response.data;
     } catch (error) {
       console.error('Error creating payment:', error.response?.data || error.message);
@@ -98,6 +97,33 @@ export class PaymentsService {
     }
   }
 
+  async getPaymentStatus(collect_request_id: string, school_id: string) {
+    try {
+      const Payload = {
+        school_id,
+        collect_request_id,
+      }
+      const newSign = this.jwtService.sign(Payload, {
+        secret: this.configService.get<string>('paymentGateway.pgKey'),
+      });
+      //get current payment status
+      const PaymentStatus = await axios.get(`${this.configService.get<string>('paymentGateway.apiUrl')}/collect-request/${collect_request_id}`,{
+          headers: {
+            'Authorization': `Bearer ${this.configService.get<string>('paymentGateway.apiKey')}`,
+          },
+          params:{
+            school_id,
+            sign: newSign,
+          }
+        });
+      return PaymentStatus.data;
+    } catch (error) {
+      console.error('Error checking payment status:', error.response?.data || error.message);
+      throw new BadRequestException(
+        error.response?.data?.message || 'Failed to check payment status',
+      );
+    }
+  }
   // Process webhook from payment gateway
   async processWebhook(webhookDto: WebhookDto) {
     try {

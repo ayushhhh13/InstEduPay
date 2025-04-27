@@ -10,7 +10,6 @@ import {
   } from '@nestjs/common';
   import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from '../../services/users/users.service';
-import { Roles } from 'src/common/decorators/roles.decorator';
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { UpdateUserDto } from '../../dtos/update-user.dto';
   
@@ -20,18 +19,16 @@ import { UpdateUserDto } from '../../dtos/update-user.dto';
     constructor(private readonly usersService: UsersService) {}
   
     @Get()
-    @Roles('admin')
     findAll() {
       return this.usersService.findAll();
     }
-  
+    
     @Get(':id')
     findOne(@Param('id') id: string) {
       return this.usersService.findOne(id);
     }
   
     @Post()
-    @Roles('admin')
     create(@Body() createUserDto: CreateUserDto) {
       return this.usersService.create(createUserDto);
     }
@@ -42,7 +39,6 @@ import { UpdateUserDto } from '../../dtos/update-user.dto';
     }
   
     @Delete(':id')
-    @Roles('admin')
     remove(@Param('id') id: string) {
       return this.usersService.remove(id);
     }

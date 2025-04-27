@@ -19,6 +19,11 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  @Post('generate-sign')
+  async generateSign(@Body('school_id') school_id: string, @Body('collect_request_id') collect_request_id: string) {
+    return this.authService.generateSign(school_id, collect_request_id);
+  }
+
   @UseGuards(AuthGuard('jwt'))
   @Get('profile')
   getProfile(@Request() req) {
