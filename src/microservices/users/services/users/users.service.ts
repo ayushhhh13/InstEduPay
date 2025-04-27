@@ -25,7 +25,7 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.userModel.findOne({ email }).exec();
+    const user = await this.userModel.findOne({ email }).select('+password').exec();
     if (!user) {
       throw new Error('User not found');
     }
@@ -34,9 +34,6 @@ export class UsersService {
   
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    if (createUserDto.password) {
-      createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
-    }
     const newUser = new this.userModel(createUserDto);
     return newUser.save();
   }
