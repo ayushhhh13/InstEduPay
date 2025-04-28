@@ -20,7 +20,7 @@ export class AuthService {
       ...registerDto,
       password: hashedPassword,
     });
-    
+
     const payload = { email: user.email, sub: user._id };
     return {
       user: {
@@ -33,12 +33,11 @@ export class AuthService {
   }
 
   async generateSign(school_id: string, collect_request_id: string) {
-    const payload = { school_id , collect_request_id};
+    const payload = { school_id, collect_request_id };
     const sign = this.jwtService.sign(payload, {
       secret: this.config.get<string>('paymentGateway.pgKey'),
     });
     return sign;
-    
   }
 
   async login(loginDto: LoginDto) {
@@ -47,9 +46,11 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const isPasswordValid = await bcrypt.compare(loginDto.password ,user.password);
+    const isPasswordValid = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    );
 
-    
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }

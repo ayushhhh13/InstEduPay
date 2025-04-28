@@ -24,10 +24,10 @@ class OrderInfoDto {
   payment_mode: string;
 
   @IsNotEmpty()
-  payemnt_details: string;
+  payment_details: string;
 
   @IsNotEmpty()
-  Payment_message: string;
+  payment_message: string;
 
   @IsNotEmpty()
   payment_time: Date;

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
@@ -33,7 +37,9 @@ export class PaymentsService {
     try {
       // Extract data from the request
       const { amount, callback_url, student_info } = createPaymentDto;
-      const school_id = this.configService.get<string>('paymentGateway.schoolId');
+      const school_id = this.configService.get<string>(
+        'paymentGateway.schoolId',
+      );
 
       // Create order in the database
       const order = await this.ordersService.create({
@@ -50,7 +56,7 @@ export class PaymentsService {
         amount,
         callback_url,
       };
-      
+
       const sign = this.jwtService.sign(payload, {
         secret: this.configService.get<string>('paymentGateway.pgKey'),
       });
@@ -58,7 +64,7 @@ export class PaymentsService {
       // Call the payment gateway API
       const apiUrl = `${this.configService.get<string>('paymentGateway.apiUrl')}/create-collect-request`;
       const apiKey = this.configService.get<string>('paymentGateway.apiKey');
-      
+
       const response = await axios.post(
         apiUrl,
         {
@@ -70,17 +76,16 @@ export class PaymentsService {
         {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
+            Authorization: `Bearer ${apiKey}`,
           },
         },
       );
 
       // Update the order with the collect_request_id
       if (response.data && response.data.collect_request_id) {
-        await this.orderModel.findByIdAndUpdate(
-          order._id,
-          { custom_order_id: response.data.collect_request_id },
-        );
+        await this.orderModel.findByIdAndUpdate(order._id, {
+          custom_order_id: response.data.collect_request_id,
+        });
 
         // Update the order status with the collect_id
         await this.orderStatusModel.findOneAndUpdate(
@@ -90,7 +95,10 @@ export class PaymentsService {
       }
       return response.data;
     } catch (error) {
-      console.error('Error creating payment:', error.response?.data || error.message);
+      console.error(
+        'Error creating payment:',
+        error.response?.data || error.message,
+      );
       throw new BadRequestException(
         error.response?.data?.message || 'Failed to create payment',
       );
@@ -99,31 +107,68 @@ export class PaymentsService {
 
   async getPaymentStatus(collect_request_id: string, school_id: string) {
     try {
+      // Step 1: Generate payload and sign
       const Payload = {
         school_id,
         collect_request_id,
-      }
+      };
       const newSign = this.jwtService.sign(Payload, {
         secret: this.configService.get<string>('paymentGateway.pgKey'),
       });
-      //get current payment status
-      const PaymentStatus = await axios.get(`${this.configService.get<string>('paymentGateway.apiUrl')}/collect-request/${collect_request_id}`,{
+
+      // Step 2: Call getStatus API
+      const response = await axios.get(
+        `${this.configService.get<string>('paymentGateway.apiUrl')}/collect-request/${collect_request_id}`,
+        {
           headers: {
-            'Authorization': `Bearer ${this.configService.get<string>('paymentGateway.apiKey')}`,
+            Authorization: `Bearer ${this.configService.get<string>('paymentGateway.apiKey')}`,
           },
-          params:{
+          params: {
             school_id,
             sign: newSign,
-          }
-        });
-      return PaymentStatus.data;
+          },
+        },
+      );
+
+      const paymentData = response.data;
+    
+      // Step 3: Map paymentData to WebhookDto
+      const webhookDto: WebhookDto = {
+        status: paymentData.status_code,
+        order_info: {
+          order_id: collect_request_id ?? 'NA',
+          order_amount: paymentData.amount,
+          transaction_amount: paymentData.transaction_amount,
+          gateway: paymentData.details.payment_mode,
+          bank_reference: paymentData.details?.bank_ref || '',
+          status: paymentData.status,
+          payment_mode: paymentData.details?.payment_mode || '',
+          payment_details: JSON.stringify(
+            paymentData.details?.payment_methods || {},
+          ),
+          payment_message: paymentData.capture_status || '',
+          payment_time: new Date(), // You may replace with correct time if available in response
+          error_message: '', // Map any error field if available
+        },
+      };
+
+      // Step 4: Internally call processWebhook
+      await this.processWebhook(webhookDto);
+
+      return {
+        data: paymentData,
+      };
     } catch (error) {
-      console.error('Error checking payment status:', error.response?.data || error.message);
+      console.error(
+        'Error processing payment status:',
+        error.response?.data || error.message,
+      );
       throw new BadRequestException(
-        error.response?.data?.message || 'Failed to check payment status',
+        error.response?.data?.message || 'Failed to process payment status',
       );
     }
   }
+
   // Process webhook from payment gateway
   async processWebhook(webhookDto: WebhookDto) {
     try {
@@ -132,49 +177,50 @@ export class PaymentsService {
         collect_id: webhookDto.order_info.order_id,
         payload: webhookDto,
       });
-      
+
       // Extract order_id from webhook payload
       const { order_id } = webhookDto.order_info;
-      
+
       // Find the order by custom_order_id
-      const order = await this.orderModel.findOne({ custom_order_id: order_id });
-      
+      const order = await this.orderModel.findOne({
+        custom_order_id: order_id,
+      });
+
       if (!order) {
         webhookLog.error = `Order not found for order_id: ${order_id}`;
         webhookLog.processed = false;
         await webhookLog.save();
         return { status: 'error', message: 'Order not found' };
       }
-      
+
       // Update order status
       const statusUpdate = {
         order_amount: webhookDto.order_info.order_amount,
         transaction_amount: webhookDto.order_info.transaction_amount,
         payment_mode: webhookDto.order_info.payment_mode,
-        payment_details: webhookDto.order_info.payemnt_details, // Note: There's a typo in the field name
+        payment_details: webhookDto.order_info.payment_details,
         bank_reference: webhookDto.order_info.bank_reference,
-        payment_message: webhookDto.order_info.Payment_message, // Note: Inconsistent capitalization
+        payment_message: webhookDto.order_info.payment_message,
         status: webhookDto.order_info.status.toLowerCase(),
         error_message: webhookDto.order_info.error_message,
         payment_time: webhookDto.order_info.payment_time,
       };
-      
-      
+
       await this.orderStatusModel.findOneAndUpdate(
         { collect_id: order._id },
         statusUpdate,
         { new: true },
       );
-      
+
       // Mark webhook as processed
       webhookLog.processed = true;
       webhookLog.response = 'Success';
       await webhookLog.save();
-      
+
       return { status: 'success', message: 'Webhook processed successfully' };
     } catch (error) {
       console.error('Error processing webhook:', error);
-      
+
       // Log webhook processing error
       const errorLog = new this.webhookLogModel({
         collect_id: webhookDto.order_info?.order_id || 'unknown',
@@ -183,7 +229,7 @@ export class PaymentsService {
         processed: false,
       });
       await errorLog.save();
-      
+
       return { status: 'error', message: error.message };
     }
   }
@@ -197,17 +243,17 @@ export class PaymentsService {
     status?: string,
   ) {
     const skip = (page - 1) * limit;
-    
+
     // Prepare match stage for filtering
     const match: any = {};
     if (status) {
       match['status.status'] = status;
     }
-    
+
     // Prepare sort stage
     const sortOption: any = {};
     sortOption[sort] = order === 'desc' ? -1 : 1;
-    
+
     // Use aggregation pipeline to join order and order_status collections
     const transactions = await this.orderModel.aggregate([
       {
@@ -236,10 +282,10 @@ export class PaymentsService {
       { $skip: skip },
       { $limit: limit },
     ]);
-    
+
     // Get total count for pagination
     const total = await this.orderModel.countDocuments();
-    
+
     return {
       data: transactions,
       meta: {
@@ -260,11 +306,11 @@ export class PaymentsService {
     order: string = 'desc',
   ) {
     const skip = (page - 1) * limit;
-    
+
     // Prepare sort stage
     const sortOption: any = {};
     sortOption[sort] = order === 'desc' ? -1 : 1;
-    
+
     // Use aggregation pipeline to join order and order_status collections
     const transactions = await this.orderModel.aggregate([
       { $match: { school_id: schoolId } },
@@ -293,10 +339,10 @@ export class PaymentsService {
       { $skip: skip },
       { $limit: limit },
     ]);
-    
+
     // Get total count for pagination
     const total = await this.orderModel.countDocuments({ school_id: schoolId });
-    
+
     return {
       data: transactions,
       meta: {
@@ -310,18 +356,24 @@ export class PaymentsService {
 
   // Get transaction status by custom order ID
   async getTransactionStatus(customOrderId: string) {
-    const order = await this.orderModel.findOne({ custom_order_id: customOrderId });
-    
+    const order = await this.orderModel.findOne({
+      custom_order_id: customOrderId,
+    });
+
     if (!order) {
       throw new NotFoundException(`Order with ID ${customOrderId} not found`);
     }
-    
-    const orderStatus = await this.orderStatusModel.findOne({ collect_id: order._id });
-    
+
+    const orderStatus = await this.orderStatusModel.findOne({
+      collect_id: order._id,
+    });
+
     if (!orderStatus) {
-      throw new NotFoundException(`Order status for order ${customOrderId} not found`);
+      throw new NotFoundException(
+        `Order status for order ${customOrderId} not found`,
+      );
     }
-    
+
     return {
       order_id: customOrderId,
       status: orderStatus.status,
@@ -336,34 +388,39 @@ export class PaymentsService {
   // Check payment status with payment gateway
   async checkPaymentStatus(collectRequestId: string) {
     try {
-      const school_id = this.configService.get<string>('paymentGateway.schoolId');
-      
+      const school_id = this.configService.get<string>(
+        'paymentGateway.schoolId',
+      );
+
       // Generate JWT signature for the status check
       const payload = {
         school_id,
         collect_request_id: collectRequestId,
       };
-      
+
       const sign = this.jwtService.sign(payload, {
         secret: this.configService.get<string>('paymentGateway.pgKey'),
       });
-      
+
       // Call the payment gateway API for status check
       const apiUrl = `${this.configService.get<string>('paymentGateway.apiUrl')}/collect-request/${collectRequestId}`;
       const apiKey = this.configService.get<string>('paymentGateway.apiKey');
-      
+
       const response = await axios.get(
         `${apiUrl}?school_id=${school_id}&sign=${sign}`,
         {
           headers: {
-            'Authorization': `Bearer ${apiKey}`,
+            Authorization: `Bearer ${apiKey}`,
           },
         },
       );
-      
+
       return response.data;
     } catch (error) {
-      console.error('Error checking payment status:', error.response?.data || error.message);
+      console.error(
+        'Error checking payment status:',
+        error.response?.data || error.message,
+      );
       throw new BadRequestException(
         error.response?.data?.message || 'Failed to check payment status',
       );

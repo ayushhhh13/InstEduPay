@@ -8,6 +8,7 @@ import {
     UseGuards,
     HttpCode,
     Res,
+    NotFoundException,
   } from '@nestjs/common';
 //   import { PaymentsService } from '../services/payments.service';
 //   import { CreatePaymentDto } from '../dtos/create-payment.dto';
@@ -43,7 +44,8 @@ import { get } from 'http';
     async handleWebhook(@Body() webhookDto: WebhookDto) {
       return this.paymentsService.processWebhook(webhookDto);
     }
-  
+
+
     // Fetch all transactions with pagination, sorting, and filtering
     @Get('transactions')
     @UseGuards(AuthGuard('jwt'))
