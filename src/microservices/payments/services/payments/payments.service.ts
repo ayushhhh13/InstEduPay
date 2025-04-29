@@ -131,7 +131,7 @@ export class PaymentsService {
       );
 
       const paymentData = response.data;
-    
+
       // Step 3: Map paymentData to WebhookDto
       const webhookDto: WebhookDto = {
         status: paymentData.status_code,
@@ -375,13 +375,14 @@ export class PaymentsService {
     }
 
     return {
-      order_id: customOrderId,
+      order_id: order._id,
       status: orderStatus.status,
       payment_mode: orderStatus.payment_mode,
       transaction_amount: orderStatus.transaction_amount,
       order_amount: orderStatus.order_amount,
       payment_time: orderStatus.payment_time,
       error_message: orderStatus.error_message,
+      bank_reference: orderStatus.bank_reference,
     };
   }
 
