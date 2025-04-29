@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 
 async function bootstrap() {
@@ -11,8 +10,7 @@ async function bootstrap() {
   console.log('Starting application...');
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   
-  const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT') || 3333;
+  const port = process.env.PORT || 3333;
   
   app.enableCors();
   console.log(`Application is running on port ${port}`);
