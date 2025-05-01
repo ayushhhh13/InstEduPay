@@ -83,11 +83,11 @@ npm run start:dev
 - }
    
 ## 🔁 Payment Flow
-🔸 POST /create-payment
-Accepts payment details from client
-Forwards data to Create Collect Request API
-JWT signs the payload for secure redirection
-Returns a redirect_url from payment gateway
+#### 🔸 POST /create-payment
+- Accepts payment details from client
+- Forwards data to Create Collect Request API
+- JWT signs the payload for secure redirection
+- Returns a redirect_url from payment gateway
 - {
   - "school_id": "65b0e6293e9f76a9694d84b4",
   - "student_info": {
@@ -100,9 +100,9 @@ Returns a redirect_url from payment gateway
 
 
 ## 🌐 Webhook Integration
-🔸 POST /webhook
-Updates Order Status when payment confirmation is received
-Matches order_id (collect_id) and updates corresponding status
+#### 🔸 POST /webhook
+- Updates Order Status when payment confirmation is received
+- Matches order_id (collect_id) and updates corresponding status
 - {
   - "status": 200,
   - "order_info": {
@@ -136,31 +136,31 @@ Matches order_id (collect_id) and updates corresponding status
 
 ## 📄 API Endpoints
 
-🔐 Authentication
-POST /auth/register – Create new user
-POST /auth/login – JWT login
+### 🔐 Authentication
+- POST /auth/register – Create new user
+- POST /auth/login – JWT login
 
-📋 Transactions
-Method | Endpoint | Description
-GET -> /transactions ->  Get all transactions (aggregated view)
-GET -> /transactions/school/:schoolId  -> Get all transactions for a specific school
-GET -> /transaction-status/:custom_order_id ->  Check status for a given transaction
-POST -> /create-payment -> Initiates payment and redirects to payment gateway
-POST -> /webhook -> Webhook listener from payment provider
+### 📋 Transactions
+#### Method -> Endpoint -> Description
+- GET -> /transactions ->  Get all transactions (aggregated view)
+- GET -> /transactions/school/:schoolId  -> Get all transactions for a specific school
+- GET -> /transaction-status/:custom_order_id ->  Check status for a given transaction
+- POST -> /create-payment -> Initiates payment and redirects to payment gateway
+- POST -> /webhook -> Webhook listener from payment provider
 
 ## 📦 Query Features
-✅ Pagination: ?limit=10&page=2
-✅ Sorting: ?sort=payment_time&order=desc
-✅ Filtering: (by status, school_id, etc.)
+-  Pagination: ?limit=10&page=2
+- Sorting: ?sort=payment_time&order=desc
+- Filtering: (by status, school_id, etc.)
 
 ## 🛡️ Security
-All routes are protected using JWT authentication
-Input validation using class-validator
-CORS & Helmet for production security
-Webhook logs and error tracking
+- All routes are protected using JWT authentication
+- Input validation using class-validator
+- CORS & Helmet for production security
+- Webhook logs and error tracking
 
 ## 🧪 Testing
-Used Postmanc lient to test:
+Used Postman client to test:
 
 ## 🧪 Postman API Testing Screenshots
 ### POST-> /auth/register
