@@ -47,7 +47,7 @@ cp .env.example .env
 npm run start:dev
 ```
 
-### 🧩 MongoDB Schemas
+## 🧩 MongoDB Schemas
 1. Order Schema
 {
   _id: ObjectId,
@@ -82,7 +82,7 @@ npm run start:dev
     received_at: Date
    }
    
-### 🔁 Payment Flow
+## 🔁 Payment Flow
 🔸 POST /create-payment
 Accepts payment details from client
 Forwards data to Create Collect Request API
@@ -99,7 +99,7 @@ Returns a redirect_url from payment gateway
 }
 
 
-### 🌐 Webhook Integration
+## 🌐 Webhook Integration
 🔸 POST /webhook
 Updates Order Status when payment confirmation is received
 Matches order_id (collect_id) and updates corresponding status
@@ -134,7 +134,7 @@ Webhooklogs Table:
 <img width="1470" alt="Screenshot 2025-04-30 at 4 58 23 PM" src="https://github.com/user-attachments/assets/6216168d-bf22-472a-8b82-54f8a23b5358" />
 
 
-### 📄 API Endpoints
+## 📄 API Endpoints
 
 🔐 Authentication
 POST /auth/register – Create new user
@@ -148,7 +148,7 @@ GET -> /transaction-status/:custom_order_id ->  Check status for a given transac
 POST -> /create-payment -> Initiates payment and redirects to payment gateway
 POST -> /webhook -> Webhook listener from payment provider
 
-### 📦 Query Features
+## 📦 Query Features
 ✅ Pagination: ?limit=10&page=2
 ✅ Sorting: ?sort=payment_time&order=desc
 ✅ Filtering: (by status, school_id, etc.)
@@ -188,7 +188,7 @@ Used Postmanc lient to test:
 # POST -> auth/generate-sign
 <img width="836" alt="Screenshot 2025-04-30 at 4 46 36 PM" src="https://github.com/user-attachments/assets/08db7f1d-d213-4e1d-9401-98e28413118b" />
 
-### ✅ Webhook Call
+## ✅ Webhook Call
 <img width="827" alt="Screenshot 2025-04-30 at 4 47 14 PM" src="https://github.com/user-attachments/assets/fe71a29c-dd62-40bf-a87c-2898ba1f636c" />
 
 ### ✅ Fetch Transactions
