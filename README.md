@@ -1,24 +1,23 @@
-# 🎓 InstaEduPay – Backend API
+# InstaEduPay – Backend API
 
 A robust **NestJS-based REST API** that powers the School Payment and Dashboard Application. This backend handles **order creation**, **transaction management**, **payment gateway integration**, and **webhook processing**, all secured with **JWT authentication** and optimized with **MongoDB Aggregation Pipelines**.
 
 ---
 
-## 🚀 Live API & Repo Links
+## Live API & Repo Links
 
 - 🔗 **Live API**: [https://instaedupay.onrender.com](https://instaedupay.onrender.com)
 - 📂 **GitHub Repo**: https://github.com/ayushhhh13/insta-edu-pay-backend
-- 
 
 ---
 
-## 🎯 Objective
+## Objective
 
 To build a **microservice architecture** backend that allows secure and scalable management of school payment transactions, supporting payment gateway interactions, webhook updates, and robust reporting capabilities.
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - **Framework**: [NestJS](https://nestjs.com/) (Node.js + TypeScript)
 - **Database**: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
@@ -30,7 +29,7 @@ To build a **microservice architecture** backend that allows secure and scalable
 
 ---
 
-## 🏗️ Project Setup
+## Project Setup
 
 ```bash
 # 1. Clone the repository
@@ -63,7 +62,7 @@ API_URL=https://dev-vanilla.edviron.com/erp
 npm run start:dev
 ```
 
-## 🧩 MongoDB Schemas
+## MongoDB Schemas
 ### 1. Order Schema
 - {
   - _id: ObjectId,
@@ -98,8 +97,8 @@ npm run start:dev
     - received_at: Date
 - }
    
-## 🔁 Payment Flow
-#### 🔸 POST /create-payment
+## Payment Flow
+#### POST /create-payment
 - Accepts payment details from client
 - Forwards data to Create Collect Request API
 - JWT signs the payload for secure redirection
@@ -115,8 +114,8 @@ npm run start:dev
 - }
 
 
-## 🌐 Webhook Integration
-#### 🔸 POST /webhook
+## Webhook Integration
+#### POST /webhook
 - Updates Order Status when payment confirmation is received
 - Matches order_id (collect_id) and updates corresponding status
 - {
@@ -150,13 +149,13 @@ npm run start:dev
 <img width="1470" alt="Screenshot 2025-04-30 at 4 58 23 PM" src="https://github.com/user-attachments/assets/6216168d-bf22-472a-8b82-54f8a23b5358" />
 
 
-## 📄 API Endpoints
+## API Endpoints
 
-### 🔐 Authentication
+### Authentication
 - POST /auth/register – Create new user
 - POST /auth/login – JWT login
 
-### 📋 Transactions
+### Transactions
 #### Method -> Endpoint -> Description
 - GET -> /transactions ->  Get all transactions (aggregated view)
 - GET -> /transactions/school/:schoolId  -> Get all transactions for a specific school
@@ -164,21 +163,21 @@ npm run start:dev
 - POST -> /create-payment -> Initiates payment and redirects to payment gateway
 - POST -> /webhook -> Webhook listener from payment provider
 
-## 📦 Query Features
+## Query Features
 -  Pagination: ?limit=10&page=2
 - Sorting: ?sort=payment_time&order=desc
 - Filtering: (by status, school_id, etc.)
 
-## 🛡️ Security
+## Security
 - All routes are protected using JWT authentication
 - Input validation using class-validator
 - CORS & Helmet for production security
 - Webhook logs and error tracking
 
-## 🧪 Testing
+## Testing
 Used Postman client to test:
 
-## 🧪 Postman API Testing Screenshots
+## Postman API Testing Screenshots
 ### POST-> /auth/register
 <img width="835" alt="Screenshot 2025-04-30 at 4 39 19 PM" src="https://github.com/user-attachments/assets/3eceb0c5-47a1-4249-b1d1-0d326099135e" />
 
@@ -194,7 +193,7 @@ Used Postman client to test:
 ### POST-> /orders
 <img width="868" alt="Screenshot 2025-04-30 at 4 44 46 PM" src="https://github.com/user-attachments/assets/140e5eca-3042-4582-b359-d92c379993d6" />
 
-## ✅ Create Payment API
+## Create Payment API
 <img width="865" alt="Screenshot 2025-04-30 at 4 45 38 PM" src="https://github.com/user-attachments/assets/3855ae0d-c74c-4c15-86b1-b155019a2595" />
 <img width="826" alt="Screenshot 2025-04-30 at 4 46 11 PM" src="https://github.com/user-attachments/assets/ca7ad0b1-d7e3-41c8-8d84-52d91f85bc49" />
 
@@ -204,10 +203,10 @@ Used Postman client to test:
 ### POST -> auth/generate-sign
 <img width="836" alt="Screenshot 2025-04-30 at 4 46 36 PM" src="https://github.com/user-attachments/assets/08db7f1d-d213-4e1d-9401-98e28413118b" />
 
-## ✅ Webhook Call
+## Webhook Call
 <img width="827" alt="Screenshot 2025-04-30 at 4 47 14 PM" src="https://github.com/user-attachments/assets/fe71a29c-dd62-40bf-a87c-2898ba1f636c" />
 
-### ✅ Fetch Transactions
+### Fetch Transactions
 <img width="858" alt="Screenshot 2025-04-30 at 4 48 34 PM" src="https://github.com/user-attachments/assets/81d06978-7278-4df8-8072-16c1f9a44e1a" />
 
 
@@ -219,26 +218,26 @@ Used Postman client to test:
 <img width="862" alt="Screenshot 2025-04-30 at 4 50 57 PM" src="https://github.com/user-attachments/assets/557cceb3-3b0a-40e0-bc21-97e7898357c3" />
 
 
-### 📊 Indexing Strategy
+### Indexing Strategy
 To improve query performance:
 Index on school_id
 Index on collect_id
 Index on custom_order_id
 Index on payment_time
 
-### 🧠 Best Practices Followed
+### Best Practices Followed
 -  Scalable modular structure
 -  DTOs and input validation
 -  Config-based env management
 -  Microservice and controller-service-repo pattern
 -  MongoDB Aggregation for data joining
 
-### 📬 Hosting & Deployment
+### Hosting & Deployment
 - Platform: Render
 - Hosted App: [https://instaedupay.onrender.com](https://instaedupay.onrender.com)
 - GitHub Repo: [https://github.com/ayushhhh13/insta-edu-pay](https://github.com/ayushhhh13/InstaEduPay)
 - Live App: [https://insta-edu-pay-frontend-41wdxiyeo.vercel.app](https://insta-edu-pay-frontend-41wdxiyeo.vercel.app)
 
-### 📜 License
+### License
 This project is licensed under the MIT License.
 
