@@ -211,15 +211,15 @@ Index on custom_order_id
 Index on payment_time
 
 ### 🧠 Best Practices Followed
-- ✅ Scalable modular structure
-- ✅ DTOs and input validation
-- ✅ Config-based env management
-- ✅ Microservice and controller-service-repo pattern
-- ✅ MongoDB Aggregation for data joining
+-  Scalable modular structure
+-  DTOs and input validation
+-  Config-based env management
+-  Microservice and controller-service-repo pattern
+-  MongoDB Aggregation for data joining
 
 ### 📬 Submission Links
-- ✅ Hosted App: https://instaedupay.onrender.com
-- ✅ GitHub Repo: [https://github.com/your-username/insta-edu-pay](https://github.com/ayushhhh13/InstaEduPay)
+- Hosted App: https://instaedupay.onrender.com
+- GitHub Repo: [https://github.com/your-username/insta-edu-pay](https://github.com/ayushhhh13/InstaEduPay)
 
 ### 📜 License
 This project is licensed under the MIT License.
