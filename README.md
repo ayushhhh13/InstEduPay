@@ -235,7 +235,7 @@ Index on payment_time
 ### Hosting & Deployment
 - Platform: Render
 - GitHub Repo: [https://github.com/ayushhhh13/insta-edu-pay](https://github.com/ayushhhh13/InstaEduPay)
-- Live App: [https://insta-edu-pay-frontend-41wdxiyeo.vercel.app](https://insta-edu-pay-frontend-41wdxiyeo.vercel.app)
+- Live App: [https://insta-edu-pay-frontend.vercel.app](https://insta-edu-pay-frontend.vercel.app)
 
 ### License
 This project is licensed under the MIT License.
