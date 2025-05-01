@@ -91,7 +91,7 @@ npm run start:dev
    -  status: string,
    -  error_message: string,
    -  payment_time: Date
-- }
+}
 ```
 
 ### 3. Webhook Logs Schema
@@ -111,13 +111,13 @@ npm run start:dev
 - Returns a redirect_url from payment gateway
 ```
 {
-  - "school_id": "65b0e6293e9f76a9694d84b4",
-  - "student_info": {
-    - "name": "Ayush Agrawal",
-    - "id": "STU1001",
-    - "email": "ayushagrawal1330@gmail.com"
-    - },
-  - "order_amount": 2000
+   "school_id": "65b0e6293e9f76a9694d84b4",
+   "student_info": {
+     "name": "Ayush Agrawal",
+     "id": "STU1001",
+     "email": "ayushagrawal1330@gmail.com"
+     },
+   "order_amount": 2000
  }
 ```
 
@@ -127,20 +127,21 @@ npm run start:dev
 - Matches order_id (collect_id) and updates corresponding status
 ```
 {
-  - "status": 200,
-  - "order_info": {
-      - "order_id": "6630f1b29b6bd36f9e5f2098",
-      - "order_amount": 2000,
-      - "transaction_amount": 2200,
-      - "gateway": "PhonePe",
-      - "bank_reference": "YESBNK222",
-      - "status": "success",
-      - "payment_mode": "upi",
-      - "payemnt_details": "success@ybl",
-      - "Payment_message": "payment success",
-      - "payment_time": "2025-04-23T08:14:21.945+00:00",
-      - "error_message": "NA"
-     - }
+   "status": 200,
+   "order_info":
+    {
+       "order_id": "6630f1b29b6bd36f9e5f2098",
+       "order_amount": 2000,
+       "transaction_amount": 2200,
+       "gateway": "PhonePe",
+       "bank_reference": "YESBNK222",
+       "status": "success",
+       "payment_mode": "upi",
+       "payemnt_details": "success@ybl",
+       "Payment_message": "payment success",
+       "payment_time": "2025-04-23T08:14:21.945+00:00",
+       "error_message": "NA"
+     }
   }
 ```
 
