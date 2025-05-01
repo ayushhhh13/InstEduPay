@@ -64,7 +64,8 @@ npm run start:dev
 
 ## MongoDB Schemas
 ### 1. Order Schema
-- {
+```
+{
   - _id: ObjectId,
   - school_id: ObjectId | string,
   - trustee_id: ObjectId | string,
@@ -74,10 +75,12 @@ npm run start:dev
     - email: string
     - },
   - gateway_name: string
-- }
+ }
+```
 
 ### 2. Order Status Schema
-- {
+```
+{
    -  collect_id: ObjectId (ref: Order),
    -  order_amount: number,
    -  transaction_amount: number,
@@ -89,13 +92,16 @@ npm run start:dev
    -  error_message: string,
    -  payment_time: Date
 - }
+```
 
 ### 3. Webhook Logs Schema
-- {
+```
+ {
     - order_id: string,
     - payload: Object,
     - received_at: Date
-- }
+ }
+```
    
 ## Payment Flow
 #### POST /create-payment
@@ -103,7 +109,8 @@ npm run start:dev
 - Forwards data to Create Collect Request API
 - JWT signs the payload for secure redirection
 - Returns a redirect_url from payment gateway
-- {
+```
+{
   - "school_id": "65b0e6293e9f76a9694d84b4",
   - "student_info": {
     - "name": "Ayush Agrawal",
@@ -111,14 +118,15 @@ npm run start:dev
     - "email": "ayushagrawal1330@gmail.com"
     - },
   - "order_amount": 2000
-- }
-
+ }
+```
 
 ## Webhook Integration
-#### POST /webhook
+#### POST `/webhook`
 - Updates Order Status when payment confirmation is received
 - Matches order_id (collect_id) and updates corresponding status
-- {
+```
+{
   - "status": 200,
   - "order_info": {
       - "order_id": "6630f1b29b6bd36f9e5f2098",
@@ -133,7 +141,8 @@ npm run start:dev
       - "payment_time": "2025-04-23T08:14:21.945+00:00",
       - "error_message": "NA"
      - }
-- }
+  }
+```
 
 ## Screenshots of MongoDB:
 ### Order Schema:
@@ -152,19 +161,19 @@ npm run start:dev
 ## API Endpoints
 
 ### Authentication
-- POST /auth/register – Create new user
-- POST /auth/login – JWT login
+- POST `/auth/register` – Create new user
+- POST `/auth/login` – JWT login
 
 ### Transactions
 #### Method -> Endpoint -> Description
-- GET -> /transactions ->  Get all transactions (aggregated view)
-- GET -> /transactions/school/:schoolId  -> Get all transactions for a specific school
-- GET -> /transaction-status/:custom_order_id ->  Check status for a given transaction
-- POST -> /create-payment -> Initiates payment and redirects to payment gateway
-- POST -> /webhook -> Webhook listener from payment provider
+- GET `/transactions`  ->  Get all transactions (aggregated view)
+- GET `/transactions/school/:schoolId`  -> Get all transactions for a specific school
+- GET `/transaction-status/:custom_order_id` ->  Check status for a given transaction
+- POST `/create-payment` -> Initiates payment and redirects to payment gateway
+- POST `/webhook` -> Webhook listener from payment provider
 
 ## Query Features
--  Pagination: ?limit=10&page=2
+- Pagination: ?limit=10&page=2
 - Sorting: ?sort=payment_time&order=desc
 - Filtering: (by status, school_id, etc.)
 
@@ -178,19 +187,19 @@ npm run start:dev
 Used Postman client to test:
 
 ## Postman API Testing Screenshots
-### POST-> /auth/register
+### POST -> /auth/register
 <img width="835" alt="Screenshot 2025-04-30 at 4 39 19 PM" src="https://github.com/user-attachments/assets/3eceb0c5-47a1-4249-b1d1-0d326099135e" />
 
-### GET-> /auth/login
+### GET -> /auth/login
 <img width="803" alt="Screenshot 2025-04-30 at 4 42 00 PM" src="https://github.com/user-attachments/assets/0423d6ed-5477-4352-b4f9-72405c2638db" />
 
-### GET-> /users
+### GET -> /users
 <img width="822" alt="Screenshot 2025-04-30 at 4 42 58 PM" src="https://github.com/user-attachments/assets/ca442857-9ea3-4412-af4e-5db81a226a85" />
 
-### GET-> users/_id
+### GET -> users/_id
 <img width="861" alt="Screenshot 2025-04-30 at 4 43 48 PM" src="https://github.com/user-attachments/assets/d1bf594c-48a1-49cb-8441-668044e42932" />
 
-### POST-> /orders
+### POST -> /orders
 <img width="868" alt="Screenshot 2025-04-30 at 4 44 46 PM" src="https://github.com/user-attachments/assets/140e5eca-3042-4582-b359-d92c379993d6" />
 
 ## Create Payment API
