@@ -6,7 +6,7 @@ A robust **NestJS-based REST API** that powers the School Payment and Dashboard 
 
 ## 🚀 Live API & Repo Links
 
-- 🔗 **Live API**: [(https://instaedupay.onrender.com)](https://instaedupay.onrender.com)
+- 🔗 **Live API**: [https://instaedupay.onrender.com](https://instaedupay.onrender.com)
 - 📂 **GitHub Repo**: https://github.com/ayushhhh13/insta-edu-pay-backend
 
 ---
