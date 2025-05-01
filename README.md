@@ -63,16 +63,16 @@ npm run start:dev
 
 ### 2. Order Status Schema
 - {
- -  collect_id: ObjectId (ref: Order),
- -  order_amount: number,
- -  transaction_amount: number,
- -  payment_mode: string,
- -  payment_details: string,
- -  bank_reference: string,
- -  payment_message: string,
- -  status: string,
- -  error_message: string,
- -  payment_time: Date
+   -  collect_id: ObjectId (ref: Order),
+   -  order_amount: number,
+   -  transaction_amount: number,
+   -  payment_mode: string,
+   -  payment_details: string,
+   -  bank_reference: string,
+   -  payment_message: string,
+   -  status: string,
+   -  error_message: string,
+   -  payment_time: Date
 - }
 
 ### 3. Webhook Logs Schema
