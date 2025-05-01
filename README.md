@@ -217,9 +217,11 @@ Index on payment_time
 -  Microservice and controller-service-repo pattern
 -  MongoDB Aggregation for data joining
 
-### 📬 Submission Links
+### 📬 Hosting & Deployment
+- Platform: Render
 - Hosted App: https://instaedupay.onrender.com
-- GitHub Repo: [https://github.com/your-username/insta-edu-pay](https://github.com/ayushhhh13/InstaEduPay)
+- GitHub Repo: [https://github.com/ayushhhh13/insta-edu-pay](https://github.com/ayushhhh13/InstaEduPay)
+- Live App: [https://insta-edu-pay-frontend-41wdxiyeo.vercel.app](https://insta-edu-pay-frontend-41wdxiyeo.vercel.app)
 
 ### 📜 License
 This project is licensed under the MIT License.
