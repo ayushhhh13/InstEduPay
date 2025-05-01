@@ -42,7 +42,22 @@ npm install
 
 # 3. Setup environment variables
 cp .env.example .env
-# Edit the .env file with your own credentials
+# Application
+PORT=3333
+NODE_ENV=development
+
+# JWT
+JWT_SECRET=YHNCvf8VEIbzJR7r/Y82Hhh+vNcNLHFj0Pj8cdikg4
+JWT_EXPIRES_IN=1d
+
+# MongoDB
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.am3dvtw.mongodb.net/?retryWrites=true&w=majority&appName=<cluster_name>
+
+# Payment Gateway
+PG_KEY=edvtest01
+API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0cnVzdGVlSWQiOiI2NWIwZTU1MmRkMzE5NTBhOWI0MWM1YmEiLCJJbmRleE9mQXBpS2V5Ijo2LCJpYXQiOjE3MTE2MjIyNzAsImV4cCI6MTc0MzE3OTg3MH0.Rye77Dp59GGxwCmwWekJHRj6edXWJnff9finjMhxKuw
+SCHOOL_ID=65b0e6293e9f76a9694d84b4
+API_URL=https://dev-vanilla.edviron.com/erp
 
 # 4. Start the server
 npm run start:dev
