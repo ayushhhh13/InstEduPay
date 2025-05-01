@@ -194,8 +194,10 @@ POST -> auth/generate-sign
 ### ✅ Fetch Transactions
 <img width="858" alt="Screenshot 2025-04-30 at 4 48 34 PM" src="https://github.com/user-attachments/assets/81d06978-7278-4df8-8072-16c1f9a44e1a" />
 
+
 BY school_id: 
 <img width="863" alt="Screenshot 2025-04-30 at 4 49 57 PM" src="https://github.com/user-attachments/assets/55deeb38-9ae8-4e7a-8183-663dc764d735" />
+
 
 By custom_order_id
 <img width="862" alt="Screenshot 2025-04-30 at 4 50 57 PM" src="https://github.com/user-attachments/assets/557cceb3-3b0a-40e0-bc21-97e7898357c3" />
