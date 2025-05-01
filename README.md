@@ -103,34 +103,34 @@ Returns a redirect_url from payment gateway
 🔸 POST /webhook
 Updates Order Status when payment confirmation is received
 Matches order_id (collect_id) and updates corresponding status
-{
-  "status": 200,
-  "order_info": {
-    "order_id": "6630f1b29b6bd36f9e5f2098",
-    "order_amount": 2000,
-    "transaction_amount": 2200,
-    "gateway": "PhonePe",
-    "bank_reference": "YESBNK222",
-    "status": "success",
-    "payment_mode": "upi",
-    "payemnt_details": "success@ybl",
-    "Payment_message": "payment success",
-    "payment_time": "2025-04-23T08:14:21.945+00:00",
-    "error_message": "NA"
-  }
-}
+- {
+  - "status": 200,
+  - "order_info": {
+    - "order_id": "6630f1b29b6bd36f9e5f2098",
+      - "order_amount": 2000,
+      - "transaction_amount": 2200,
+      - "gateway": "PhonePe",
+      - "bank_reference": "YESBNK222",
+      - "status": "success",
+      - "payment_mode": "upi",
+      - "payemnt_details": "success@ybl",
+      - "Payment_message": "payment success",
+      - "payment_time": "2025-04-23T08:14:21.945+00:00",
+      - "error_message": "NA"
+     - }
+- }
 
-Screenshots of MongoDB:
-Order Schema:
+## Screenshots of MongoDB:
+### Order Schema:
 <img width="1470" alt="Screenshot 2025-04-30 at 4 56 05 PM" src="https://github.com/user-attachments/assets/d238544d-0983-4184-961a-79a5ef7d7197" />
 
-OrderStatuses Schema: 
+### OrderStatuses Schema: 
 <img width="1456" alt="Screenshot 2025-04-30 at 4 56 43 PM" src="https://github.com/user-attachments/assets/248dc832-ca21-495a-a770-c3e8fffcc5fc" />
 
-Users Table:
+### Users Table:
 <img width="1470" alt="Screenshot 2025-04-30 at 4 58 04 PM" src="https://github.com/user-attachments/assets/159fad32-b171-417a-a9cb-1b3ef8b2bd57" />
 
-Webhooklogs Table:
+### Webhooklogs Table:
 <img width="1470" alt="Screenshot 2025-04-30 at 4 58 23 PM" src="https://github.com/user-attachments/assets/6216168d-bf22-472a-8b82-54f8a23b5358" />
 
 
