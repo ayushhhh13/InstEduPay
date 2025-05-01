@@ -49,38 +49,38 @@ npm run start:dev
 
 ## 🧩 MongoDB Schemas
 ### 1. Order Schema
-{
-  _id: ObjectId,
-  school_id: ObjectId | string,
-  trustee_id: ObjectId | string,
-  student_info: {
-    name: string,
-    id: string,
-    email: string
-  },
-  gateway_name: string
-}
+- {
+  - _id: ObjectId,
+  - school_id: ObjectId | string,
+  - trustee_id: ObjectId | string,
+  - student_info: {
+    - name: string,
+    - id: string,
+    - email: string
+    - },
+  - gateway_name: string
+- }
 
 ### 2. Order Status Schema
-   {
-  collect_id: ObjectId (ref: Order),
-  order_amount: number,
-  transaction_amount: number,
-  payment_mode: string,
-  payment_details: string,
-  bank_reference: string,
-  payment_message: string,
-  status: string,
-  error_message: string,
-  payment_time: Date
-}
+- {
+ -  collect_id: ObjectId (ref: Order),
+ -  order_amount: number,
+ -  transaction_amount: number,
+ -  payment_mode: string,
+ -  payment_details: string,
+ -  bank_reference: string,
+ -  payment_message: string,
+ -  status: string,
+ -  error_message: string,
+ -  payment_time: Date
+- }
 
 ### 3. Webhook Logs Schema
-  {
-    order_id: string,
-    payload: Object,
-    received_at: Date
-   }
+- {
+    - order_id: string,
+    - payload: Object,
+    - received_at: Date
+- }
    
 ## 🔁 Payment Flow
 🔸 POST /create-payment
@@ -88,15 +88,15 @@ Accepts payment details from client
 Forwards data to Create Collect Request API
 JWT signs the payload for secure redirection
 Returns a redirect_url from payment gateway
-{
-  "school_id": "65b0e6293e9f76a9694d84b4",
-  "student_info": {
-    "name": "Ayush Agrawal",
-    "id": "STU1001",
-    "email": "ayushagrawal1330@gmail.com"
-  },
-  "order_amount": 2000
-}
+- {
+  - "school_id": "65b0e6293e9f76a9694d84b4",
+  - "student_info": {
+    - "name": "Ayush Agrawal",
+    - "id": "STU1001",
+    - "email": "ayushagrawal1330@gmail.com"
+    - },
+  - "order_amount": 2000
+- }
 
 
 ## 🌐 Webhook Integration
@@ -106,7 +106,7 @@ Matches order_id (collect_id) and updates corresponding status
 - {
   - "status": 200,
   - "order_info": {
-    - "order_id": "6630f1b29b6bd36f9e5f2098",
+      - "order_id": "6630f1b29b6bd36f9e5f2098",
       - "order_amount": 2000,
       - "transaction_amount": 2200,
       - "gateway": "PhonePe",
