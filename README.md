@@ -7,7 +7,7 @@ A robust **NestJS-based REST API** that powers the School Payment and Dashboard 
 ## Live API & Repo Links
 
 - 🔗 **Live API**: [https://instaedupay.onrender.com](https://instaedupay.onrender.com)
-- 📂 **GitHub Repo**: https://github.com/ayushhhh13/insta-edu-pay-backend
+- 📂 **GitHub Repo**: [https://github.com/ayushhhh13/InstaEduPay](https://github.com/ayushhhh13/InstaEduPay)
 
 ---
 
@@ -33,14 +33,14 @@ To build a **microservice architecture** backend that allows secure and scalable
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/insta-edu-pay-backend.git
+git clone https://github.com/ayushhhh13/InstaEduPay.git
 cd insta-edu-pay-backend
 
 # 2. Install dependencies
 npm install
 
 # 3. Setup environment variables
-cp .env.example .env
+.env
 # Application
 PORT=3333
 NODE_ENV=development
